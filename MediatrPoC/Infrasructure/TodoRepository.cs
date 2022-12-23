@@ -1,4 +1,4 @@
-﻿using MediatrPoC.Applications;
+﻿using MediatrPoC.Applications.Todos;
 
 namespace MediatrPoC.Infrasructure;
 

@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using MediatrPoC.Applications;
+using MediatrPoC.Applications.Todos;
 using MediatrPoC.Infrasructure;
 
 var assembly = typeof(Program).Assembly;

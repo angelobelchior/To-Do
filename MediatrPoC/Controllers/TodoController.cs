@@ -1,7 +1,6 @@
 using MediatR;
-using MediatrPoC.Applications.AddNewTodo;
 using MediatrPoC.Applications.ListTodos;
-
+using MediatrPoC.Applications.Todos.AddNewTodo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediatrPoC.Controllers;

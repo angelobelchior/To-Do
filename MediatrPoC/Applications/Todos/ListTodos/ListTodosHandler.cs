@@ -3,8 +3,9 @@
 using MediatR;
 
 using MediatrPoC.Applications.AddNewTodo;
+using MediatrPoC.Applications.Todos;
 
-namespace MediatrPoC.Applications.ListTodos;
+namespace MediatrPoC.Applications.Todos.ListTodos;
 
 public record ListTodosRequest() : IRequest<ListTodosRequestResponse>;
 

@@ -1,4 +1,4 @@
-﻿namespace MediatrPoC.Applications;
+﻿namespace MediatrPoC.Applications.Todos;
 
 public interface ITodoRepository
 {

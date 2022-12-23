@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
 
 using MediatR;
+using MediatrPoC.Applications.Todos;
 
-namespace MediatrPoC.Applications.AddNewTodo;
+namespace MediatrPoC.Applications.Todos.AddNewTodo;
 
 public record AddNewTodoRequest(string Title, string Description, bool IsDone = false) : IRequest<AddNewTodoResponse>
 {
@@ -17,7 +18,6 @@ public record AddNewTodoRequest(string Title, string Description, bool IsDone = 
 }
 
 public record AddNewTodoResponse(Todo Todo);
-
 
 public record AddNewTodoNotification(Guid UniqueId, string Application, string Feature) : INotification
 {
