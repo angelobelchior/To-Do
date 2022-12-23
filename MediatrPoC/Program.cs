@@ -1,8 +1,3 @@
-using FluentValidation;
-using MediatR;
-using MediatrPoC.Applications;
-using MediatrPoC.Infrasructure;
-
 var assembly = typeof(Program).Assembly;
 
 var builder = WebApplication.CreateBuilder(args);

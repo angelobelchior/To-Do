@@ -1,10 +1,4 @@
-﻿using FluentValidation;
-
-using MediatR;
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace MediatrPoC.Controllers;
+﻿namespace MediatrPoC.Controllers;
 
 public abstract class MediatorController : ControllerBase
 {

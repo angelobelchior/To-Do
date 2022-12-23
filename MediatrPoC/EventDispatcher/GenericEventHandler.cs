@@ -1,7 +1,4 @@
-﻿using MediatR;
-using System.Text.Json;
-
-namespace MediatrPoC.EventDispatcher;
+﻿namespace MediatrPoC.EventDispatcher;
 
 public class GenericEventHandler<TNotification> : INotificationHandler<TNotification>
     where TNotification : INotification

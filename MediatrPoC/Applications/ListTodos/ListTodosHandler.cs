@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-
-using MediatR;
-
-using MediatrPoC.Applications.AddNewTodo;
+﻿using MediatrPoC.Applications.AddNewTodo;
 
 namespace MediatrPoC.Applications.ListTodos;
 

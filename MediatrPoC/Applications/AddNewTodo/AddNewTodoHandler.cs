@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-
-using MediatR;
-
-namespace MediatrPoC.Applications.AddNewTodo;
+﻿namespace MediatrPoC.Applications.AddNewTodo;
 
 public record AddNewTodoRequest(string Title, string Description, bool IsDone = false) : IRequest<AddNewTodoResponse>
 {
@@ -10,8 +6,8 @@ public record AddNewTodoRequest(string Title, string Description, bool IsDone = 
     {
         public AddNewTodoRequestValidator()
         {
-            RuleFor(x => x.Title).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.Title).NotEmpty().MaximumLength(100).MinimumLength(3);
+            RuleFor(x => x.Description).MaximumLength(800).MinimumLength(3);
         }
     }
 }
