@@ -1,29 +1,18 @@
-﻿using FluentValidation;
+﻿namespace MediatrPoC.Applications.Todos.ListTodos;
 
-using MediatR;
-
-using MediatrPoC.Applications.AddNewTodo;
-using MediatrPoC.Applications.Todos;
-
-namespace MediatrPoC.Applications.Todos.ListTodos;
-
-public record ListTodosRequest() : IRequest<ListTodosRequestResponse>;
+public record ListTodosRequest(bool? IsDone = null) : IRequest<ListTodosRequestResponse>;
 
 public record ListTodosRequestResponse(IEnumerable<Todo> Todos);
 
 public class ListTodosHandler : IRequestHandler<ListTodosRequest, ListTodosRequestResponse>
 {
-    private readonly IMediator _mediator;
-    private readonly ITodoRepository _addNewTodoRepository;
-    public ListTodosHandler(IMediator mediator, ITodoRepository addNewTodoRepository)
-    {
-        _mediator = mediator;
-        _addNewTodoRepository = addNewTodoRepository;
-    }
+    private readonly ITodosRepository _addNewTodoRepository;
+    public ListTodosHandler(ITodosRepository addNewTodoRepository)
+        => _addNewTodoRepository = addNewTodoRepository;
 
     public async Task<ListTodosRequestResponse> Handle(ListTodosRequest request, CancellationToken cancellationToken)
     {
-        var todos = await _addNewTodoRepository.ListAll();
+        var todos = await _addNewTodoRepository.ListAll(request.IsDone);
         return new ListTodosRequestResponse(todos);
     }
 }

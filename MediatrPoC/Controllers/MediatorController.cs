@@ -1,17 +1,11 @@
-﻿using FluentValidation;
-
-using MediatR;
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace MediatrPoC.Controllers;
+﻿namespace MediatrPoC.Controllers;
 
 public abstract class MediatorController : ControllerBase
 {
-    private readonly ILogger<TodoController> _logger;
+    private readonly ILogger<TodosController> _logger;
     private readonly IMediator _mediator;
 
-    public MediatorController(ILogger<TodoController> logger, IMediator mediator)
+    public MediatorController(ILogger<TodosController> logger, IMediator mediator)
     {
         _logger = logger;
         _mediator = mediator;

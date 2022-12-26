@@ -1,7 +1,4 @@
-﻿using MediatR;
-using System.Text.Json;
-
-namespace MediatrPoC.EventDispatcher;
+﻿namespace MediatrPoC.Applications;
 
 public class GenericEventHandler<TNotification> : INotificationHandler<TNotification>
     where TNotification : INotification
@@ -9,7 +6,7 @@ public class GenericEventHandler<TNotification> : INotificationHandler<TNotifica
     public Task Handle(TNotification notification, CancellationToken cancellationToken)
     {
         var json = JsonSerializer.Serialize(notification);
-        Console.WriteLine($"Type: {notification.GetType().Name} - Json: {json}"  );
+        Console.WriteLine($"Type: {notification.GetType().Name} - Json: {json}");
         return Task.CompletedTask;
     }
 }
