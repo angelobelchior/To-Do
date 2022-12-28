@@ -24,7 +24,7 @@ public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, Result>
     public async Task<Result> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
     {
         var todo = await _repository.GetById(request.Id, cancellationToken);
-        if (todo is null) return Result.EntityNotFound("ToDo", $"To-do {request.Id} not found");
+        if (todo is null) return Result.EntityNotFound("ToDo", request.Id, $"To-do {request.Id} not found");
 
         await _repository.Delete(request.Id, cancellationToken);
         await _mediator.Publish(new DeleteTodoNotification

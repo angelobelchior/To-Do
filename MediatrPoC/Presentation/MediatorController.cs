@@ -22,6 +22,9 @@ public abstract class MediatorController : ControllerBase
             {
                 ResultStatus.Success => Ok(response),
                 ResultStatus.EntityNotFound => NotFound(response),
+                ResultStatus.EntityAlreadyExists => Conflict(response),
+                ResultStatus.HasValidation => BadRequest(response),
+                ResultStatus.HasError => StatusCode(StatusCodes.Status500InternalServerError, response),
                 ResultStatus.NoContent => NoContent(),
                 _ => throw new InvalidCastException($"Cannot cast {response?.GetType().Name} to {nameof(Result)}"),
             };
@@ -29,11 +32,11 @@ public abstract class MediatorController : ControllerBase
         catch (ValidationException validationException)
         {
             var validations = validationException.Errors.Select(e => new Validation(e.PropertyName, e.ErrorMessage));
-            return BadRequest(Result.Validation(validations.ToArray()));
+            return BadRequest(Result.WithValidations(validations.ToArray()));
         }
         catch (Exception exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, Result.Error(exception));
+            return StatusCode(StatusCodes.Status500InternalServerError, Result.WithError(exception));
         }
     }
 }

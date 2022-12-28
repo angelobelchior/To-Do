@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace MediatrPoC.Applications.Todos.AddNewTodo;
+﻿namespace MediatrPoC.Applications.Todos.AddNewTodo;
 
 public record AddNewTodoRequest(string Title, string Description, bool IsDone) : IRequest<Result<AddNewTodoResponse>>
 {

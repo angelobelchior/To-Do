@@ -24,7 +24,7 @@ public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest, Resu
     public async Task<Result> Handle(MarkAsDoneTodoRequest request, CancellationToken cancellationToken)
     {
         var todo = await _repository.GetById(request.Id, cancellationToken);
-        if (todo is null) return Result.EntityNotFound("ToDo", $"To-do {request.Id} not found");
+        if (todo is null) return Result.EntityNotFound("ToDo", request.Id, $"To-do {request.Id} not found");
 
         var update = todo with { IsDone = request.IsDone };
 
