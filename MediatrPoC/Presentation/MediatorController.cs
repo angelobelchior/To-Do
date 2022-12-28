@@ -2,14 +2,10 @@
 
 public abstract class MediatorController : ControllerBase
 {
-    private readonly ILogger<MediatorController> _logger;
     private readonly IMediator _mediator;
 
-    public MediatorController(ILogger<MediatorController> logger, IMediator mediator)
-    {
-        _logger = logger;
-        _mediator = mediator;
-    }
+    protected MediatorController(IMediator mediator)
+        => _mediator = mediator;
 
     protected async Task<IActionResult> Send<T>(T request, CancellationToken cancellationToken)
         where T : class

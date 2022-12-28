@@ -7,8 +7,8 @@ namespace MediatrPoC.Presentation;
 [Route("todos")]
 public class TodosController : MediatorController
 {
-    public TodosController(ILogger<TodosController> logger, IMediator mediator)
-        : base(logger, mediator) { }
+    public TodosController(IMediator mediator)
+        : base(mediator) { }
 
     /// <summary>
     /// Create new to-do
