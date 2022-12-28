@@ -1,6 +1,6 @@
 ﻿namespace MediatrPoC.Applications.Todos.MarkAsDoneTodo;
 
-public record MarkAsDoneTodoRequest(Guid Id, bool IsDone) : IRequest
+public record MarkAsDoneTodoRequest(Guid Id, bool IsDone) : IRequest<Result>
 {
     public class MarkAsDoneTodoRequestValidator : AbstractValidator<MarkAsDoneTodoRequest>
     {
@@ -11,7 +11,7 @@ public record MarkAsDoneTodoRequest(Guid Id, bool IsDone) : IRequest
 
 public record MarkAsDoneTodoNotification() : NotificationBase;
 
-public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest>
+public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest, Result>
 {
     private readonly IMediator _mediator;
     private readonly ITodosRepository _repository;
@@ -21,14 +21,14 @@ public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest>
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(MarkAsDoneTodoRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(MarkAsDoneTodoRequest request, CancellationToken cancellationToken)
     {
-        var todo = await _repository.GetById(request.Id);
-        if (todo is null) return Unit.Value; //Retornar um valor estruturado como NotFound
+        var todo = await _repository.GetById(request.Id, cancellationToken);
+        if (todo is null) return Result.EntityNotFound("ToDo", $"To-do {request.Id} not found");
 
         var update = todo with { IsDone = request.IsDone };
 
-        await _repository.Update(update);
+        await _repository.Update(update, cancellationToken);
         await _mediator.Publish(new MarkAsDoneTodoNotification
         {
             UniqueId = request.Id,
@@ -36,6 +36,6 @@ public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest>
             Feature = "MarkAsDoneTodo"
         }, cancellationToken);
 
-        return Unit.Value;
+        return Result.Success();
     }
 }

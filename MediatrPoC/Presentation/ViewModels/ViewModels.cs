@@ -1,7 +1,7 @@
-﻿namespace MediatrPoC.Controllers.ViewModels;
+﻿namespace MediatrPoC.Presentation.ViewModels;
 
 /// <summary>
-/// Todo View Model
+/// To-do View Model
 /// </summary>
 /// <param name="Title">Title</param>
 /// <param name="Description">Description</param>
@@ -9,7 +9,7 @@
 public record TodoViewModel(string Title, string Description, bool IsDone = false);
 
 /// <summary>
-/// Mark as Done Todo View Model
+/// Mark as Done To-do View Model
 /// </summary>
 /// <param name="IsDone">Is Done</param>
 public record MarkAsDoneTodoViewModel(bool IsDone);

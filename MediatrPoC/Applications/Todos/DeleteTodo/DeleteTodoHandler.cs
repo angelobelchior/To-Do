@@ -1,6 +1,6 @@
 ﻿namespace MediatrPoC.Applications.Todos.DeleteTodo;
 
-public record DeleteTodoRequest(Guid Id) : IRequest
+public record DeleteTodoRequest(Guid Id) : IRequest<Result>
 {
     public class DeleteTodoRequestValidator : AbstractValidator<DeleteTodoRequest>
     {
@@ -11,7 +11,7 @@ public record DeleteTodoRequest(Guid Id) : IRequest
 
 public record DeleteTodoNotification() : NotificationBase;
 
-public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest>
+public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, Result>
 {
     private readonly IMediator _mediator;
     private readonly ITodosRepository _repository;
@@ -21,9 +21,12 @@ public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest>
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
     {
-        await _repository.Delete(request.Id);
+        var todo = await _repository.GetById(request.Id, cancellationToken);
+        if (todo is null) return Result.EntityNotFound("ToDo", $"To-do {request.Id} not found");
+
+        await _repository.Delete(request.Id, cancellationToken);
         await _mediator.Publish(new DeleteTodoNotification
         {
             UniqueId = request.Id,
@@ -31,6 +34,6 @@ public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest>
             Feature = "DeleteTodo"
         }, cancellationToken);
         
-        return Unit.Value;
+        return Result.Success();
     }
 }

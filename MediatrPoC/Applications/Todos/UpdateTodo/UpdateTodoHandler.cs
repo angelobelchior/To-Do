@@ -1,6 +1,6 @@
 ﻿namespace MediatrPoC.Applications.Todos.UpdateTodo;
 
-public record UpdateTodoRequest(Guid Id, string Title, string Description, bool IsDone) : IRequest
+public record UpdateTodoRequest(Guid Id, string Title, string Description, bool IsDone) : IRequest<Result>
 {
     public class UpdateTodoRequestValidator : AbstractValidator<UpdateTodoRequest>
     {
@@ -15,7 +15,7 @@ public record UpdateTodoRequest(Guid Id, string Title, string Description, bool 
 
 public record UpdateTodoNotification() : NotificationBase;
 
-public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest>
+public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest, Result>
 {
     private readonly IMediator _mediator;
     private readonly ITodosRepository _repository;
@@ -25,13 +25,13 @@ public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest>
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(UpdateTodoRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateTodoRequest request, CancellationToken cancellationToken)
     {
-        var todo = await _repository.GetById(request.Id);
-        if (todo is null) return Unit.Value; //Retornar um valor estruturado como NotFound
+        var todo = await _repository.GetById(request.Id, cancellationToken);
+        if (todo is null) return Result.EntityNotFound("ToDo", $"To-do {request.Id} not found");
 
         var update = todo with { Title = request.Title, Description = request.Description, IsDone = request.IsDone };
-        await _repository.Update(update);
+        await _repository.Update(update, cancellationToken);
         await _mediator.Publish(new UpdateTodoNotification
         {
             UniqueId = request.Id,
@@ -39,6 +39,6 @@ public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest>
             Feature = "UpdateTodo"
         }, cancellationToken);
 
-        return Unit.Value;
+        return Result.Success();
     }
 }
