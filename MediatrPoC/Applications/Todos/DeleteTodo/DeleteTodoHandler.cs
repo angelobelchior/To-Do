@@ -9,7 +9,7 @@ public record DeleteTodoRequest(Guid Id) : IRequest<Result>
     }
 }
 
-public record DeleteTodoNotification() : NotificationBase;
+public record DeleteTodoNotification : NotificationBase;
 
 public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, Result>
 {

@@ -17,7 +17,7 @@ public record AddNewTodoRequest(string Title, string Description, bool IsDone) :
 
 public record AddNewTodoResponse(Todo Todo);
 
-public record AddNewTodoNotification() : NotificationBase;
+public record AddNewTodoNotification : NotificationBase;
 
 public class AddNewTodoHandler : IRequestHandler<AddNewTodoRequest, Result<AddNewTodoResponse>>
 {

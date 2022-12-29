@@ -1,6 +1,6 @@
 ﻿namespace MediatrPoC.Applications;
 
-public abstract record NotificationBase() : INotification
+public abstract record NotificationBase : INotification
 {
     public required Guid UniqueId { get; init; }
     public required string Application { get; init; }

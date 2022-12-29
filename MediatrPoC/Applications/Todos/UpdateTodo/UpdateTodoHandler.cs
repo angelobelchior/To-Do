@@ -13,7 +13,7 @@ public record UpdateTodoRequest(Guid Id, string Title, string Description, bool 
     }
 }
 
-public record UpdateTodoNotification() : NotificationBase;
+public record UpdateTodoNotification : NotificationBase;
 
 public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest, Result>
 {

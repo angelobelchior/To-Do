@@ -9,7 +9,7 @@ public record MarkAsDoneTodoRequest(Guid Id, bool IsDone) : IRequest<Result>
     }
 }
 
-public record MarkAsDoneTodoNotification() : NotificationBase;
+public record MarkAsDoneTodoNotification : NotificationBase;
 
 public class MarkAsDoneTodoHandler : IRequestHandler<MarkAsDoneTodoRequest, Result>
 {
