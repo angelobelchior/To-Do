@@ -6,9 +6,9 @@ namespace ToDo.Api.Presentation;
 [ApiController]
 [Route("todos")]
 [Produces("application/json")]
-public class TodosController : MediatorController
+public class ToDosController : MediatorController
 {
-    public TodosController(IMediator mediator)
+    public ToDosController(IMediator mediator)
         : base(mediator) { }
 
     /// <summary>
@@ -20,7 +20,7 @@ public class TodosController : MediatorController
     [HttpPost]
     [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status201Created)]
     public Task<IActionResult> Post(TodoViewModel request, CancellationToken cancellationToken)
-        => Send(new AddNewTodoRequest(request.Title, request.Description, request.IsDone), cancellationToken);
+        => Send(new AddNewToDoRequest(request.Title, request.Description, request.IsDone), cancellationToken);
 
     /// <summary>
     /// Get to-do by Id
@@ -32,7 +32,7 @@ public class TodosController : MediatorController
     [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Get(Guid id, CancellationToken cancellationToken = default)
-        => Send(new GetTodoByIdRequest(id), cancellationToken);
+        => Send(new GetToDoByIdQuery(id), cancellationToken);
 
     /// <summary>
     /// List all To-dos
@@ -43,7 +43,7 @@ public class TodosController : MediatorController
     [HttpGet]
     [ProducesResponseType(typeof(Contracts.IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
     public Task<IActionResult> Get(bool? isDone = null, CancellationToken cancellationToken = default)
-        => Send(new ListTodosRequest(isDone), cancellationToken);
+        => Send(new ListToDosQuery(isDone), cancellationToken);
 
     /// <summary>
     /// Search for a to-do
@@ -55,7 +55,7 @@ public class TodosController : MediatorController
     [HttpGet("search")]
     [ProducesResponseType(typeof(Contracts.IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
     public Task<IActionResult> Search(string filter, bool? isDone = null, CancellationToken cancellationToken = default)
-    => Send(new SearchTodosRequest(filter, isDone), cancellationToken);
+    => Send(new SearchToDosQuery(filter, isDone), cancellationToken);
 
     /// <summary>
     /// Delete a to-do by Id
@@ -67,7 +67,7 @@ public class TodosController : MediatorController
     [ProducesResponseType(typeof(Contracts.IResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
-        => Send(new DeleteTodoRequest(id), cancellationToken);
+        => Send(new DeleteToDoRequest(id), cancellationToken);
 
     /// <summary>
     /// Update a to-do
@@ -80,7 +80,7 @@ public class TodosController : MediatorController
     [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Put(Guid id, TodoViewModel viewModel, CancellationToken cancellationToken = default)
-        => Send(new UpdateTodoRequest(id, viewModel.Title, viewModel.Description, viewModel.IsDone), cancellationToken);
+        => Send(new UpdateToDoRequest(id, viewModel.Title, viewModel.Description, viewModel.IsDone), cancellationToken);
 
     /// <summary>
     /// Mark a to-do as done
@@ -93,5 +93,5 @@ public class TodosController : MediatorController
     [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Patch(Guid id, MarkAsDoneTodoViewModel viewModel, CancellationToken cancellationToken = default)
-        => Send(new MarkAsDoneTodoRequest(id, viewModel.IsDone), cancellationToken);
+        => Send(new MarkToDoAsDoneRequest(id, viewModel.IsDone), cancellationToken);
 }

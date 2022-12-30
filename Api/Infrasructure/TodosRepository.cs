@@ -1,6 +1,6 @@
 ﻿namespace ToDo.Api.Infrasructure;
 
-public class TodosRepository : ITodosRepository
+public class ToDosRepository : IToDosWriteRepository, IToDosReadRepository
 {
     private static readonly List<Contracts.ToDos.ToDo> Todos = new();
 

@@ -1,18 +1,14 @@
 ﻿namespace ToDo.Api.Applications.Todos.ListTodos;
 
-public record ListTodosRequest(bool? IsDone = null) : IRequest<IResult<ListTodosRequestResponse>>;
-
-public record ListTodosRequestResponse(IEnumerable<Contracts.ToDos.ToDo> Todos);
-
-public class ListTodosHandler : IRequestHandler<ListTodosRequest, IResult<ListTodosRequestResponse>>
+public class ListToDosHandler : IRequestHandler<ListToDosQuery, IResult<ListToDosResponse>>
 {
-    private readonly ITodosRepository _addNewTodoRepository;
-    public ListTodosHandler(ITodosRepository addNewTodoRepository)
-        => _addNewTodoRepository = addNewTodoRepository;
+    private readonly IToDosReadRepository _readRepository;
+    public ListToDosHandler(IToDosReadRepository readRepository)
+        => _readRepository = readRepository;
 
-    public async Task<IResult<ListTodosRequestResponse>> Handle(ListTodosRequest request, CancellationToken cancellationToken)
+    public async Task<IResult<ListToDosResponse>> Handle(ListToDosQuery request, CancellationToken cancellationToken)
     {
-        var todos = await _addNewTodoRepository.ListAll(request.IsDone, cancellationToken);
-        return Result<ListTodosRequestResponse>.Success(new ListTodosRequestResponse(todos));
+        var todos = await _readRepository.ListAll(request.IsDone, cancellationToken);
+        return Result<ListToDosResponse>.Success(new ListToDosResponse(todos));
     }
 }

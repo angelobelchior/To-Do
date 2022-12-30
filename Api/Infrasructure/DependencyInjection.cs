@@ -2,9 +2,9 @@
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static void AddInfrastructure(this IServiceCollection services)
     {
-        services.AddSingleton<ITodosRepository, TodosRepository>();
-        return services;
+        services.AddSingleton<IToDosReadRepository, ToDosRepository>();
+        services.AddSingleton<IToDosWriteRepository, ToDosRepository>();
     }
 }

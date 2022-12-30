@@ -1,25 +1,22 @@
 ﻿namespace ToDo.Api.Applications.Todos.GetTodoById;
 
-public record GetTodoByIdRequest(Guid Id) : IRequest<IResult<Contracts.ToDos.ToDo>>
+public class GetToDoByIdRequestValidator : AbstractValidator<GetToDoByIdQuery>
 {
-    public class GetTodoByIdRequestValidator : AbstractValidator<GetTodoByIdRequest>
+    public GetToDoByIdRequestValidator()
     {
-        public GetTodoByIdRequestValidator()
-        {
-            RuleFor(x => x.Id).NotEmpty();
-        }
+        RuleFor(x => x.Id).NotEmpty();
     }
 }
 
-public class GetTodoByIdHandler : IRequestHandler<GetTodoByIdRequest, IResult<Contracts.ToDos.ToDo>>
+public class GetToDoByIdHandler : IRequestHandler<GetToDoByIdQuery, IResult<Contracts.ToDos.ToDo>>
 {
-    private readonly ITodosRepository _repository;
-    public GetTodoByIdHandler(ITodosRepository repository)
-        => _repository = repository;
+    private readonly IToDosReadRepository _readRepository;
+    public GetToDoByIdHandler(IToDosReadRepository readRepository)
+        => _readRepository = readRepository;
 
-    public async Task<IResult<Contracts.ToDos.ToDo>> Handle(GetTodoByIdRequest request, CancellationToken cancellationToken)
+    public async Task<IResult<Contracts.ToDos.ToDo>> Handle(GetToDoByIdQuery request, CancellationToken cancellationToken)
     {
-        var todo = await _repository.GetById(request.Id, cancellationToken);
+        var todo = await _readRepository.GetById(request.Id, cancellationToken);
         if (todo is null) return Result<Contracts.ToDos.ToDo>.EntityNotFound("ToDo", request.Id, $"To-do {request.Id} not found");
 
         return Result<Contracts.ToDos.ToDo>.Success(todo);

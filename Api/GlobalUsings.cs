@@ -10,6 +10,7 @@ global using FluentValidation;
 global using MediatR;
 
 global using ToDo.Contracts;
+global using ToDo.Contracts.ToDos;
 
 global using ToDo.Api.Infrasructure;
 

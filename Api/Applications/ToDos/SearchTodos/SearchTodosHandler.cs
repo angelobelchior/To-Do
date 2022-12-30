@@ -1,18 +1,14 @@
 ﻿namespace ToDo.Api.Applications.Todos.SearchTodos;
 
-public record SearchTodosRequest(string Filter, bool? IsDone = null) : IRequest<IResult<SearchTodosRequestResponse>>;
-
-public record SearchTodosRequestResponse(IEnumerable<Contracts.ToDos.ToDo> Todos);
-
-public class SearchTodosHandler : IRequestHandler<SearchTodosRequest, IResult<SearchTodosRequestResponse>>
+public class SearchToDosHandler : IRequestHandler<SearchToDosQuery, IResult<SearchToDosResponse>>
 {
-    private readonly ITodosRepository _addNewTodoRepository;
-    public SearchTodosHandler(ITodosRepository addNewTodoRepository)
-        => _addNewTodoRepository = addNewTodoRepository;
+    private readonly IToDosReadRepository _readRepository;
+    public SearchToDosHandler(IToDosReadRepository readRepository)
+        => _readRepository = readRepository;
 
-    public async Task<IResult<SearchTodosRequestResponse>> Handle(SearchTodosRequest request, CancellationToken cancellationToken)
+    public async Task<IResult<SearchToDosResponse>> Handle(SearchToDosQuery request, CancellationToken cancellationToken)
     {
-        var todos = await _addNewTodoRepository.Search(request.Filter, request.IsDone, cancellationToken);
-        return Result<SearchTodosRequestResponse>.Success(new SearchTodosRequestResponse(todos));
+        var todos = await _readRepository.Search(request.Filter, request.IsDone, cancellationToken);
+        return Result<SearchToDosResponse>.Success(new SearchToDosResponse(todos));
     }
 }
