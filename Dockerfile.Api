@@ -1,4 +1,7 @@
+LABEL org.opencontainers.image.source https://github.com/angelobelchior/To-Do
+
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
