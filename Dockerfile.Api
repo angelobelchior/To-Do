@@ -1,6 +1,6 @@
-LABEL org.opencontainers.image.source https://github.com/angelobelchior/To-Do
-
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+
+LABEL org.opencontainers.image.source https://github.com/angelobelchior/To-Do
 
 WORKDIR /app
 EXPOSE 80
