@@ -25,11 +25,16 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - uses: actions/checkout@v3
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@v5
+    - uses: azure/docker-login@v1
       with:
+        login-server: ghcr.io
         username: angelobelchior
         password: ${{ secrets.GH_ACTIONS_TOKEN }}
-        registry: ghcr.io
-        dockerfile: Dockerfile.Api
+    
+    - run: |
+        docker build -t ghcr.io/angelobelchior/to-do:latest -f Dockerfile.Api .
+        docker tag ghcr.io/angelobelchior/to-do:latest ghcr.io/angelobelchior/to-do:${{ github.sha }}
+    
+    - run: |
+        docker push ghcr.io/angelobelchior/to-do:latest
+        docker push ghcr.io/angelobelchior/to-do:${{ github.sha }}
