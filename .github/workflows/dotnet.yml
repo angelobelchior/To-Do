@@ -12,6 +12,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
+    - run: |
+        if [[ "${{secrets.DOCKER_HUB_REPOSITORY}}" == "" ]]; then
+          echo The secrets.DOCKER_HUB_REPOSITORY does not exist
+        else
+          echo The secrets.DOCKER_HUB_REPOSITORY exists
+        fi    
+    
+    - run: |
+        if [[ "${{secrets.DOCKER_HUB_USERNAME}}" == "" ]]; then
+          echo The secrets.DOCKER_HUB_USERNAME does not exist
+        else
+          echo The secrets.DOCKER_HUB_USERNAME exists
+        fi      
+        
+    - run: |
+        if [[ "${{secrets.DOCKER_HUB_TOKEN}}" == "" ]]; then
+          echo The secrets.DOCKER_HUB_TOKEN does not exist
+        else
+          echo The secrets.DOCKER_HUB_TOKEN exists
+        fi             
+    
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
