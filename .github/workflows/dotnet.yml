@@ -29,7 +29,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        username: ${{ github.actor }}
+        username: angelobelchior
         password: ${{ secrets.GH_ACTIONS_TOKEN }}
         registry: ghcr.io
         dockerfile: Dockerfile.Api
