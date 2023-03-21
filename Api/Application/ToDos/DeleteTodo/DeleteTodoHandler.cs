@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.DeleteTodo;
+﻿namespace ToDo.Api.Application.ToDos.DeleteTodo;
 
 public class DeleteToDoRequestValidator : AbstractValidator<DeleteToDoRequest>
 {

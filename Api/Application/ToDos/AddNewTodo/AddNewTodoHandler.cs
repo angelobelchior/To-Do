@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.AddNewTodo;
+﻿namespace ToDo.Api.Application.ToDos.AddNewTodo;
 
 public class AddNewToDoRequestValidator : AbstractValidator<AddNewToDoRequest>
 {

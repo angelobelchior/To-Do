@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.SearchTodos;
+﻿namespace ToDo.Api.Application.ToDos.SearchTodos;
 
 public class SearchToDosHandler : IRequestHandler<SearchToDosQuery, IResult<SearchToDosResponse>>
 {

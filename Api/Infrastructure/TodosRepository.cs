@@ -1,4 +1,6 @@
-﻿namespace ToDo.Api.Infrasructure;
+﻿using ToDo.Api.Application.ToDos;
+
+namespace ToDo.Api.Infrastructure;
 
 public class ToDosRepository : IToDosWriteRepository, IToDosReadRepository
 {

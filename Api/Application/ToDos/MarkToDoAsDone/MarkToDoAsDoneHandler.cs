@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.MarkAsDoneTodo;
+﻿namespace ToDo.Api.Application.ToDos.MarkToDoAsDone;
 
 public class MarkToDoAsDoneRequestValidator : AbstractValidator<MarkToDoAsDoneRequest>
 {

@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.UpdateTodo;
+﻿namespace ToDo.Api.Application.ToDos.UpdateTodo;
 
 public class UpdateToDoRequestValidator : AbstractValidator<UpdateToDoRequest>
 {

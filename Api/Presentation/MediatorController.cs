@@ -16,13 +16,15 @@ public abstract class MediatorController : ControllerBase
             if (response is not Contracts.IResult result)
                 throw new InvalidCastException($"Cannot cast {response?.GetType().Name} to {nameof(Contracts.IResult)}");
 
-            if (result.Status == ResultStatus.EntityNotFound) return NotFound(result);
-            if (result.Status == ResultStatus.EntityAlreadyExists) return Conflict(result);
-            if (result.Status == ResultStatus.HasValidation) return BadRequest(result);
-            if (result.Status == ResultStatus.HasError) return  StatusCode(StatusCodes.Status500InternalServerError, result); 
-            if (result.Status == ResultStatus.NoContent) return NoContent();
-
-            return Ok(result);
+            return result.Status switch
+            {
+                ResultStatus.EntityNotFound => NotFound(result),
+                ResultStatus.EntityAlreadyExists => Conflict(result),
+                ResultStatus.HasValidation => BadRequest(result),
+                ResultStatus.HasError => StatusCode(StatusCodes.Status500InternalServerError, result),
+                ResultStatus.NoContent => NoContent(),
+                _ => Ok(result)
+            };
         }
         catch (ValidationException validationException)
         {

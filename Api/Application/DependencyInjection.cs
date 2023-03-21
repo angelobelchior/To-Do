@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications;
+﻿namespace ToDo.Api.Application;
 
 public static class DependencyInjection
 {
@@ -8,6 +8,7 @@ public static class DependencyInjection
         
         services.AddMediatR(assembly);
         services.AddValidatorsFromAssembly(assembly);
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(MeasureTimeBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 }

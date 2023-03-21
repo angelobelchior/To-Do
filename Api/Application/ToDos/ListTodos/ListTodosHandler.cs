@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.ListTodos;
+﻿namespace ToDo.Api.Application.ToDos.ListTodos;
 
 public class ListToDosHandler : IRequestHandler<ListToDosQuery, IResult<ListToDosResponse>>
 {

@@ -36,7 +36,7 @@ public interface IResult
     ResultStatus Status { get; }
 }
 
-public interface IResult<T>
+public interface IResult<out T>
 {
     T? Data { get; }
 }

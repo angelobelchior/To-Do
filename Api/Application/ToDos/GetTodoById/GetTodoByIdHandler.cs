@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications.Todos.GetTodoById;
+﻿namespace ToDo.Api.Application.ToDos.GetTodoById;
 
 public class GetToDoByIdRequestValidator : AbstractValidator<GetToDoByIdQuery>
 {

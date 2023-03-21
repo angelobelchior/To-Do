@@ -1,4 +1,4 @@
-﻿namespace ToDo.Api.Applications;
+﻿namespace ToDo.Api.Application;
 
 public abstract record NotificationBase : INotification
 {

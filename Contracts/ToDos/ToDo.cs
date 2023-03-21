@@ -41,7 +41,7 @@ public record UpdateToDoRequest(Guid Id, string Title, string Description, bool 
 /// </summary>
 /// <param name="Id">Id</param>
 /// <param name="IsDone">Is Done</param>
-public record MarkToDoAsDoneRequest(Guid Id, bool IsDone) : IRequest<Contracts.IResult>;
+public record MarkToDoAsDoneRequest(Guid Id, bool IsDone) : IRequest<IResult>;
 
 /// <summary>
 /// Delete To-Do command Request
@@ -56,7 +56,7 @@ public record DeleteToDoRequest(Guid Id) : IRequest<IResult>;
 public record GetToDoByIdQuery(Guid Id) : IRequest<IResult<ToDo>>;
 
 /// <summary>
-/// Searh To-Dos query Request
+/// Search To-Dos query Request
 /// </summary>
 /// <param name="Filter">Filter</param>
 /// <param name="IsDone">Is Done</param>

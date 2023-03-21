@@ -18,7 +18,7 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>New ToDo</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(IResult<Contracts.ToDos.ToDo>), StatusCodes.Status201Created)]
     public Task<IActionResult> Post(TodoViewModel request, CancellationToken cancellationToken)
         => Send(new AddNewToDoRequest(request.Title, request.Description, request.IsDone), cancellationToken);
 
@@ -29,8 +29,8 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Get(Guid id, CancellationToken cancellationToken = default)
         => Send(new GetToDoByIdQuery(id), cancellationToken);
 
@@ -41,7 +41,7 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns></returns>
     [HttpGet]
-    [ProducesResponseType(typeof(Contracts.IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
     public Task<IActionResult> Get(bool? isDone = null, CancellationToken cancellationToken = default)
         => Send(new ListToDosQuery(isDone), cancellationToken);
 
@@ -53,9 +53,9 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken"></param>
     /// <returns>Todos</returns>
     [HttpGet("search")]
-    [ProducesResponseType(typeof(Contracts.IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IResult<IEnumerable<Contracts.ToDos.ToDo>>), StatusCodes.Status200OK)]
     public Task<IActionResult> Search(string filter, bool? isDone = null, CancellationToken cancellationToken = default)
-    => Send(new SearchToDosQuery(filter, isDone), cancellationToken);
+        => Send(new SearchToDosQuery(filter, isDone), cancellationToken);
 
     /// <summary>
     /// Delete a to-do by Id
@@ -65,7 +65,7 @@ public class ToDosController : MediatorController
     /// <returns>ToDo</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(Contracts.IResult), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
         => Send(new DeleteToDoRequest(id), cancellationToken);
 
@@ -77,8 +77,8 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>Result</returns>
     [HttpPut("{id}")]
-    [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Put(Guid id, TodoViewModel viewModel, CancellationToken cancellationToken = default)
         => Send(new UpdateToDoRequest(id, viewModel.Title, viewModel.Description, viewModel.IsDone), cancellationToken);
 
@@ -90,8 +90,8 @@ public class ToDosController : MediatorController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>Result</returns>
     [HttpPatch("{id}")]
-    [ProducesResponseType(typeof(Contracts.IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Contracts.IHasEntityWarning), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(IResult<Contracts.ToDos.ToDo>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IHasEntityWarning), StatusCodes.Status404NotFound)]
     public Task<IActionResult> Patch(Guid id, MarkAsDoneTodoViewModel viewModel, CancellationToken cancellationToken = default)
         => Send(new MarkToDoAsDoneRequest(id, viewModel.IsDone), cancellationToken);
 }
