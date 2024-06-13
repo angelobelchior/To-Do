@@ -1,0 +1,47 @@
+name: Trigger auto deployment for container-app-36qrc5e4psvni
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - 'Api/**'
+    - '.github/workflows/container-app-36qrc5e4psvni-AutoDeployTrigger-d51d54c8-512f-4b78-b33c-e7e7db67cbf3.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CONTAINERAPP36QRC5E4PSVNI_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.CONTAINERAPP36QRC5E4PSVNI_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.CONTAINERAPP36QRC5E4PSVNI_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}/Api 
+          registryUrl: 
+          registryUsername: ${{ secrets.CONTAINERAPP36QRC5E4PSVNI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.CONTAINERAPP36QRC5E4PSVNI_REGISTRY_PASSWORD }}
+          containerAppName: container-app-36qrc5e4psvni
+          resourceGroup: todoae65
+          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
